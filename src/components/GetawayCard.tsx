@@ -1,7 +1,7 @@
 import React from 'react';
 import { BaseCity, Getaway, TempUnit } from '../types';
 import { toDisplayTemp, formatDelta } from '../services/weatherService';
-import { Clock, MapPin, Bookmark, ArrowRight, Waves } from 'lucide-react';
+import { Clock, MapPin, Bookmark, ArrowRight, Waves, Calendar } from 'lucide-react';
 
 interface GetawayCardProps {
   getaway: Getaway;
@@ -133,6 +133,50 @@ export const GetawayCard: React.FC<GetawayCardProps> = ({
               {route.routeHighway}
             </div>
           </div>
+
+          {/* Matched Local Event Inside Card */}
+          {getaway.events && getaway.events.length > 0 && (
+            <div className="mt-3.5 p-3 rounded-xl bg-stone-50 border border-stone-200/90 text-left">
+              <div className="flex items-center justify-between gap-1.5 mb-1.5">
+                <div className="flex items-center gap-1 text-[11px] font-semibold text-stone-500">
+                  <Calendar className="w-3.5 h-3.5 text-amber-600" />
+                  <span>Matched Event</span>
+                </div>
+
+                {/* Category badge like "Outdoor / Water" or "Indoor AC" */}
+                <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold tracking-tight uppercase ${
+                  getaway.events[0].categoryBadge === 'Indoor AC'
+                    ? 'bg-blue-100 text-blue-900 border border-blue-200'
+                    : getaway.events[0].categoryBadge === 'Outdoor / Water'
+                    ? 'bg-teal-100 text-teal-900 border border-teal-200'
+                    : getaway.events[0].categoryBadge === 'Live Music / Patio'
+                    ? 'bg-amber-100 text-amber-900 border border-amber-200'
+                    : 'bg-emerald-100 text-emerald-900 border border-emerald-200'
+                }`}>
+                  {getaway.events[0].categoryBadge}
+                </span>
+              </div>
+
+              {/* Event Name */}
+              <div className="text-xs font-bold text-stone-900 truncate">
+                {getaway.events[0].title}
+              </div>
+
+              {/* Event Time */}
+              <div className="flex items-center justify-between text-[11px] text-stone-500 mt-1 font-medium">
+                <span className="flex items-center gap-1">
+                  <Clock className="w-3 h-3 text-stone-400" />
+                  <span>{getaway.events[0].time}</span>
+                </span>
+
+                {getaway.events.length > 1 && (
+                  <span className="text-amber-700 font-semibold text-[10px]">
+                    +{getaway.events.length - 1} more
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Card Footer Action */}

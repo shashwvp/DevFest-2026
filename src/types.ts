@@ -36,15 +36,26 @@ export interface RouteDetail {
   tip: string;
 }
 
+export type EventCategoryBadge = 
+  | 'Outdoor / Water' 
+  | 'Indoor AC' 
+  | 'Foothill Social' 
+  | 'Live Music / Patio' 
+  | 'Nature & Heritage';
+
 export interface GetawayEvent {
   id: string;
+  destinationId: string;
+  destinationTitle: string;
   title: string;
   date: string;
   time: string;
+  categoryBadge: EventCategoryBadge;
   eveningTempF: number;
   location: string;
   description: string;
   isFree?: boolean;
+  admissionText?: string;
 }
 
 export interface Getaway {

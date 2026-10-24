@@ -313,8 +313,13 @@ export const GetawayModal: React.FC<GetawayModalProps> = ({
                 {getaway.events.map((ev) => (
                   <div key={ev.id} className="p-4 rounded-xl bg-stone-50 border border-stone-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div>
-                      <div className="text-sm font-bold text-stone-900">{ev.title}</div>
-                      <div className="text-xs text-stone-500 mt-0.5 flex items-center gap-2">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <div className="text-sm font-bold text-stone-900">{ev.title}</div>
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-tight bg-amber-100 text-amber-900 border border-amber-200">
+                          {ev.categoryBadge}
+                        </span>
+                      </div>
+                      <div className="text-xs text-stone-500 mt-1 flex items-center gap-2">
                         <span>{ev.date}</span>
                         <span>·</span>
                         <span>{ev.time}</span>

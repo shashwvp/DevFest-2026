@@ -306,11 +306,16 @@ export default function App() {
           )}
         </div>
 
-        {/* 6. Cool Down Events Section */}
+        {/* 6. Event Matching Section */}
         <EventsSection
           events={ALL_EVENTS}
           baseCity={activeBaseCity}
+          baseTempF={currentBaseTempF}
           unit={unit}
+          onSelectGetawayById={(destId) => {
+            const found = GETAWAYS.find((g) => g.id === destId);
+            if (found) setSelectedGetaway(found);
+          }}
         />
       </main>
 
