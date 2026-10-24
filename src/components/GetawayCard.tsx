@@ -1,7 +1,17 @@
 import React from 'react';
 import { BaseCity, Getaway, TempUnit } from '../types';
 import { toDisplayTemp, formatDelta } from '../services/weatherService';
-import { Clock, MapPin, Bookmark, ArrowRight, Waves, Calendar } from 'lucide-react';
+import {
+  Clock,
+  MapPin,
+  Bookmark,
+  ArrowRight,
+  Waves,
+  Calendar,
+  CloudFog,
+  Sparkles,
+  TrendingDown,
+} from 'lucide-react';
 
 interface GetawayCardProps {
   getaway: Getaway;
@@ -38,13 +48,13 @@ export const GetawayCard: React.FC<GetawayCardProps> = ({
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        {/* Scrim */}
+        {/* Measured Scrim */}
         <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-black/20" />
 
         {/* Top Floating Controls */}
         <div className="absolute top-3 inset-x-3 flex items-center justify-between">
-          {/* Unboxed category label with subtle shadow */}
-          <span className="text-xs font-semibold text-white drop-shadow-sm flex items-center gap-1">
+          {/* Category Tag Badge */}
+          <span className="px-2.5 py-1 rounded-lg bg-stone-950/70 backdrop-blur-md text-white text-xs font-semibold border border-white/20 flex items-center gap-1.5 shadow-xs">
             <span aria-hidden="true">{getaway.conditionIcon}</span>
             <span>{getaway.categoryLabel}</span>
           </span>
@@ -67,19 +77,24 @@ export const GetawayCard: React.FC<GetawayCardProps> = ({
           </button>
         </div>
 
-        {/* Bottom Media Bar: Prominent Temperature & Delta */}
+        {/* Bottom Media Bar: Temperature Badge Tag & Delta */}
         <div className="absolute bottom-3 inset-x-3 flex items-end justify-between text-white">
-          <div>
-            <div className="text-2xl font-black font-mono tabular-nums leading-none drop-shadow-xs">
-              {toDisplayTemp(destTempF, unit)}
+          <div className="flex items-center gap-2">
+            {/* Temperature Badge Tag */}
+            <div className="px-3 py-1.5 rounded-xl bg-stone-900/80 backdrop-blur-md border border-white/20 text-white shadow-xs">
+              <div className="text-xl sm:text-2xl font-black font-mono tabular-nums leading-none">
+                {toDisplayTemp(destTempF, unit)}
+              </div>
             </div>
-            <div className="text-xs font-bold text-emerald-300 font-mono tabular-nums mt-1 drop-shadow-xs">
+
+            {/* Difference Tag */}
+            <div className="text-xs font-extrabold text-emerald-300 font-mono tabular-nums drop-shadow-xs">
               {delta.text}
             </div>
           </div>
 
           {getaway.waterTempF && (
-            <div className="text-[11px] font-medium text-cyan-200 flex items-center gap-1 drop-shadow-xs">
+            <div className="text-[11px] font-medium text-cyan-200 flex items-center gap-1 drop-shadow-xs bg-stone-950/60 px-2 py-1 rounded-lg backdrop-blur-xs border border-cyan-400/30">
               <Waves className="w-3.5 h-3.5" />
               <span>{getaway.waterTempF}</span>
             </div>
@@ -90,19 +105,49 @@ export const GetawayCard: React.FC<GetawayCardProps> = ({
       {/* Card Body */}
       <div className="p-5 flex-1 flex flex-col justify-between">
         <div>
-          {/* Prominent Temperature Difference Badge (e.g. 24°F Cooler than Modesto) */}
-          <div className={`mb-3 px-3 py-2 rounded-xl flex items-center justify-between text-xs font-bold font-mono tabular-nums border ${
-            delta.isCooler
-              ? 'bg-emerald-50 text-emerald-800 border-emerald-200/90'
-              : 'bg-stone-50 text-stone-700 border-stone-200'
-          }`}>
-            <span className="text-emerald-700 font-extrabold">{delta.text}</span>
-            <span className="text-[11px] font-medium text-stone-500 font-sans">
-              {getaway.isIndoorAc ? 'Indoor A/C' : getaway.condition}
+          {/* Badge Tags Row: Temperature Delta Tag & Microclimate Status Badges */}
+          <div className="flex flex-wrap items-center gap-1.5 mb-3">
+            {/* Prominent Delta Badge Tag */}
+            <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-extrabold font-mono border ${
+              delta.isCooler
+                ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
+                : 'bg-stone-50 text-stone-700 border-stone-200'
+            }`}>
+              <TrendingDown className="w-3.5 h-3.5 text-emerald-600" />
+              <span>{delta.text}</span>
             </span>
+
+            {/* Microclimate Status Badges ("Above the Fog", "Misted Patio", "20°+ Drop") */}
+            {getaway.microclimateBadges?.map((badge, idx) => {
+              const isDrop = badge.includes('Drop');
+              const isFog = badge.includes('Fog');
+              const isPatio = badge.includes('Patio');
+              const isRiver = badge.includes('River');
+              return (
+                <span
+                  key={idx}
+                  className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[11px] font-bold tracking-tight border ${
+                    isDrop
+                      ? 'bg-cyan-50 text-cyan-900 border-cyan-200'
+                      : isFog
+                      ? 'bg-sky-50 text-sky-900 border-sky-200'
+                      : isPatio
+                      ? 'bg-amber-50 text-amber-900 border-amber-200'
+                      : isRiver
+                      ? 'bg-teal-50 text-teal-900 border-teal-200'
+                      : 'bg-stone-100 text-stone-800 border-stone-200'
+                  }`}
+                >
+                  {isDrop && <span className="text-[10px]">❄️</span>}
+                  {isFog && <CloudFog className="w-3 h-3 text-sky-600" />}
+                  {isPatio && <Sparkles className="w-3 h-3 text-amber-600" />}
+                  <span>{badge}</span>
+                </span>
+              );
+            })}
           </div>
 
-          {/* Metadata: Clean unboxed text with typographic separators (No pills!) */}
+          {/* Metadata Row */}
           <div className="flex items-center gap-1.5 text-xs text-stone-500 font-medium">
             <span>{getaway.county}</span>
             <span aria-hidden="true">·</span>
@@ -111,7 +156,7 @@ export const GetawayCard: React.FC<GetawayCardProps> = ({
             <span>{getaway.shadeRating}</span>
           </div>
 
-          {/* Title */}
+          {/* Destination Title */}
           <h3 className="text-lg font-bold text-stone-900 mt-2 leading-snug group-hover:text-amber-700 transition-colors">
             {getaway.title}
           </h3>
@@ -143,7 +188,7 @@ export const GetawayCard: React.FC<GetawayCardProps> = ({
                   <span>Matched Event</span>
                 </div>
 
-                {/* Category badge like "Outdoor / Water" or "Indoor AC" */}
+                {/* Event Category Badge Tag */}
                 <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold tracking-tight uppercase ${
                   getaway.events[0].categoryBadge === 'Indoor AC'
                     ? 'bg-blue-100 text-blue-900 border border-blue-200'
@@ -175,6 +220,20 @@ export const GetawayCard: React.FC<GetawayCardProps> = ({
                   </span>
                 )}
               </div>
+
+              {/* Event Tags Badge Tags */}
+              {getaway.eventTags && getaway.eventTags.length > 0 && (
+                <div className="flex flex-wrap items-center gap-1 mt-2 pt-2 border-t border-stone-200/60">
+                  {getaway.eventTags.map((tag, i) => (
+                    <span
+                      key={i}
+                      className="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-white border border-stone-200/80 text-stone-600"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -183,13 +242,13 @@ export const GetawayCard: React.FC<GetawayCardProps> = ({
         <div className="mt-5 pt-3 border-t border-stone-100 flex items-center justify-between">
           <span className="text-xs text-stone-500 font-medium">
             {getaway.events && getaway.events.length > 0
-              ? `${getaway.events.length} upcoming cool event`
+              ? `${getaway.events.length} cool event${getaway.events.length === 1 ? '' : 's'}`
               : 'Open daily'}
           </span>
 
           <button
             onClick={() => onSelect(getaway)}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-amber-700 hover:text-amber-800 bg-amber-50 hover:bg-amber-100/80 rounded-lg transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-amber-700 hover:text-amber-800 bg-amber-50 hover:bg-amber-100/80 rounded-lg transition-colors cursor-pointer"
           >
             <span>Explore Escape</span>
             <ArrowRight className="w-3.5 h-3.5" />

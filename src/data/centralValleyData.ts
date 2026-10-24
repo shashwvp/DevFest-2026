@@ -87,6 +87,8 @@ export const GETAWAYS: Getaway[] = [
     waterTempF: '67°F Surface',
     shadeRating: 'Heavy Shaded Ponderosa Canopy',
     quickFilters: ['coolest-outdoors', 'foothill-getaways'],
+    microclimateBadges: ['Above the Fog', '20°+ Drop', 'Alpine Breeze'],
+    eventTags: ['Outdoor / Water', 'Kayak Meetup', 'Night Cinema'],
     baseCityRoutes: {
       modesto: {
         driveTime: '1 hr 18 min',
@@ -188,6 +190,8 @@ export const GETAWAYS: Getaway[] = [
     waterTempF: '61°F Cold Snowmelt',
     shadeRating: 'Cool River Willow Cover',
     quickFilters: ['coolest-outdoors', 'foothill-getaways'],
+    microclimateBadges: ['Snowmelt River', 'Willow Shade', '12°F Drop'],
+    eventTags: ['River Float', 'Covered Bridge', 'Outdoor / Water'],
     baseCityRoutes: {
       modesto: {
         driveTime: '32 min',
@@ -290,6 +294,8 @@ export const GETAWAYS: Getaway[] = [
     reliefType: 'underground',
     shadeRating: 'Subterranean 100% Shade',
     quickFilters: ['air-conditioned-indoors'],
+    microclimateBadges: ['Misted Patio', 'Indoor A/C Sanctuary', '20°+ Drop'],
+    eventTags: ['Indoor AC', 'Classic Films', 'Live Symphony'],
     baseCityRoutes: {
       modesto: {
         driveTime: '5 min',
@@ -389,6 +395,8 @@ export const GETAWAYS: Getaway[] = [
     reliefType: 'underground',
     shadeRating: 'Subterranean 100% Shade',
     quickFilters: ['foothill-getaways', 'air-conditioned-indoors'],
+    microclimateBadges: ['20°+ Drop', 'Wine Cave Cellar', 'Creekside Shade'],
+    eventTags: ['Live Music / Patio', 'Wine Tasting', 'Subterranean Tour'],
     baseCityRoutes: {
       modesto: {
         driveTime: '1 hr 12 min',
@@ -489,6 +497,8 @@ export const GETAWAYS: Getaway[] = [
     waterTempF: '58°F Pacific Ocean',
     shadeRating: 'Coastal Fog & Ocean Breeze',
     quickFilters: ['coolest-outdoors'],
+    microclimateBadges: ['Marine Inversion', '20°+ Drop', 'Pacific Breeze'],
+    eventTags: ['Beach Concerts', 'Ocean Breeze', 'Boardwalk'],
     baseCityRoutes: {
       modesto: {
         driveTime: '1 hr 55 min',
@@ -574,6 +584,8 @@ export const GETAWAYS: Getaway[] = [
     reliefType: 'alpine',
     shadeRating: 'Heavy Shaded Ponderosa Canopy',
     quickFilters: ['coolest-outdoors', 'foothill-getaways'],
+    microclimateBadges: ['Above the Fog', '20°+ Drop', 'Giant Sequoia Canopy'],
+    eventTags: ['Ranger Walk', 'Ancient Trees', 'Nature & Heritage'],
     baseCityRoutes: {
       modesto: {
         driveTime: '1 hr 25 min',
@@ -661,6 +673,8 @@ export const GETAWAYS: Getaway[] = [
     reliefType: 'underground',
     shadeRating: 'Subterranean 100% Shade',
     quickFilters: ['air-conditioned-indoors'],
+    microclimateBadges: ['Subterranean Oasis', '20°+ Drop', '100% Earth Shade'],
+    eventTags: ['Indoor AC', 'Guided Architecture', 'Lantern Tours'],
     baseCityRoutes: {
       modesto: {
         driveTime: '1 hr 25 min',

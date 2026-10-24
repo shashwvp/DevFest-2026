@@ -98,6 +98,8 @@ export interface Getaway {
   admissionInfo: string;
   shadeRating: 'Heavy Shaded Ponderosa Canopy' | 'Coastal Fog & Ocean Breeze' | 'Cool River Willow Cover' | 'Subterranean 100% Shade' | 'Open Twilight Sky';
   quickFilters?: QuickFilterId[];
+  microclimateBadges?: string[];
+  eventTags?: string[];
   events?: GetawayEvent[];
 }
 

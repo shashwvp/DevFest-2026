@@ -129,6 +129,20 @@ export const GetawayModal: React.FC<GetawayModalProps> = ({
             <p className="text-sm text-stone-300 mt-1 max-w-2xl">
               {getaway.subtitle}
             </p>
+
+            {/* Microclimate Status Badges */}
+            {getaway.microclimateBadges && getaway.microclimateBadges.length > 0 && (
+              <div className="flex flex-wrap items-center gap-1.5 mt-2.5">
+                {getaway.microclimateBadges.map((badge, idx) => (
+                  <span
+                    key={idx}
+                    className="px-2.5 py-0.5 rounded-lg text-[11px] font-bold bg-white/20 backdrop-blur-md text-white border border-white/30"
+                  >
+                    {badge}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
