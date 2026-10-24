@@ -1,4 +1,4 @@
-import { BaseCity, Getaway, GetawayEvent } from '../types';
+import { BaseCity, Getaway, GetawayEvent, QuickFilterId } from '../types';
 
 export const BASE_CITIES: Record<string, BaseCity> = {
   modesto: {
@@ -86,6 +86,7 @@ export const GETAWAYS: Getaway[] = [
     reliefType: 'alpine',
     waterTempF: '67°F Surface',
     shadeRating: 'Heavy Shaded Ponderosa Canopy',
+    quickFilters: ['coolest-outdoors', 'foothill-getaways'],
     baseCityRoutes: {
       modesto: {
         driveTime: '1 hr 18 min',
@@ -186,6 +187,7 @@ export const GETAWAYS: Getaway[] = [
     reliefType: 'water',
     waterTempF: '61°F Cold Snowmelt',
     shadeRating: 'Cool River Willow Cover',
+    quickFilters: ['coolest-outdoors', 'foothill-getaways'],
     baseCityRoutes: {
       modesto: {
         driveTime: '32 min',
@@ -287,6 +289,7 @@ export const GETAWAYS: Getaway[] = [
     conditionIcon: '❄️',
     reliefType: 'underground',
     shadeRating: 'Subterranean 100% Shade',
+    quickFilters: ['air-conditioned-indoors'],
     baseCityRoutes: {
       modesto: {
         driveTime: '5 min',
@@ -385,6 +388,7 @@ export const GETAWAYS: Getaway[] = [
     conditionIcon: '🍷',
     reliefType: 'underground',
     shadeRating: 'Subterranean 100% Shade',
+    quickFilters: ['foothill-getaways', 'air-conditioned-indoors'],
     baseCityRoutes: {
       modesto: {
         driveTime: '1 hr 12 min',
@@ -484,6 +488,7 @@ export const GETAWAYS: Getaway[] = [
     reliefType: 'coastal',
     waterTempF: '58°F Pacific Ocean',
     shadeRating: 'Coastal Fog & Ocean Breeze',
+    quickFilters: ['coolest-outdoors'],
     baseCityRoutes: {
       modesto: {
         driveTime: '1 hr 55 min',
@@ -568,6 +573,7 @@ export const GETAWAYS: Getaway[] = [
     conditionIcon: '🌲',
     reliefType: 'alpine',
     shadeRating: 'Heavy Shaded Ponderosa Canopy',
+    quickFilters: ['coolest-outdoors', 'foothill-getaways'],
     baseCityRoutes: {
       modesto: {
         driveTime: '1 hr 25 min',
@@ -654,6 +660,7 @@ export const GETAWAYS: Getaway[] = [
     conditionIcon: '🏛️',
     reliefType: 'underground',
     shadeRating: 'Subterranean 100% Shade',
+    quickFilters: ['air-conditioned-indoors'],
     baseCityRoutes: {
       modesto: {
         driveTime: '1 hr 25 min',
@@ -704,3 +711,10 @@ export const GETAWAYS: Getaway[] = [
 export const ALL_EVENTS: GetawayEvent[] = GETAWAYS.flatMap(
   (g) => g.events || []
 );
+
+export const QUICK_FILTERS: { id: QuickFilterId; label: string }[] = [
+  { id: 'all', label: 'All Escapes' },
+  { id: 'coolest-outdoors', label: 'Coolest Outdoors (River/Lakes)' },
+  { id: 'air-conditioned-indoors', label: 'Air-Conditioned Indoors' },
+  { id: 'foothill-getaways', label: 'Foothill Getaways' },
+];

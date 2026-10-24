@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { BaseCityId, CategoryId, Getaway, TempUnit, WeatherScenario } from './types';
+import { BaseCityId, CategoryId, QuickFilterId, Getaway, TempUnit, WeatherScenario } from './types';
 import { BASE_CITIES, GETAWAYS, ALL_EVENTS } from './data/centralValleyData';
 import {
   fetchLiveWeather,
@@ -49,8 +49,8 @@ export default function App() {
   // Live destination temperatures dictionary: getawayId -> tempF
   const [destinationLiveTemps, setDestinationLiveTemps] = useState<Record<string, number>>({});
 
-  // Filter & Search states
-  const [activeCategory, setActiveCategory] = useState<CategoryId>('all');
+  // Quick Filter & Search states
+  const [activeQuickFilter, setActiveQuickFilter] = useState<QuickFilterId>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [maxDriveMinutes, setMaxDriveMinutes] = useState<number | null>(null);
   const [sortBy, setSortBy] = useState<'coolest' | 'drive' | 'elevation' | 'popular'>('coolest');
@@ -153,9 +153,11 @@ export default function App() {
   // Filtered and sorted getaways
   const filteredGetaways = useMemo(() => {
     return GETAWAYS.filter((g) => {
-      // Category filter
-      if (activeCategory !== 'all' && g.category !== activeCategory) {
-        return false;
+      // Quick filter
+      if (activeQuickFilter !== 'all') {
+        if (!g.quickFilters?.includes(activeQuickFilter)) {
+          return false;
+        }
       }
 
       // Max drive time filter
@@ -199,7 +201,7 @@ export default function App() {
       // 'popular': default sequence
       return 0;
     });
-  }, [activeCategory, maxDriveMinutes, searchQuery, sortBy, activeBaseCityId, getawayTempsF]);
+  }, [activeQuickFilter, maxDriveMinutes, searchQuery, sortBy, activeBaseCityId, getawayTempsF]);
 
   // Saved getaways objects
   const savedGetawaysList = useMemo(() => {
@@ -257,10 +259,10 @@ export default function App() {
           onSelectGetaway={(getaway) => setSelectedGetaway(getaway)}
         />
 
-        {/* 4. Category Filter & Sorting Tabs */}
+        {/* 4. Quick Filters & Sorting Tabs */}
         <CategoryFilterBar
-          activeCategory={activeCategory}
-          onSelectCategory={(cat) => setActiveCategory(cat)}
+          activeFilter={activeQuickFilter}
+          onSelectFilter={(qf) => setActiveQuickFilter(qf)}
           sortBy={sortBy}
           onChangeSortBy={(sort) => setSortBy(sort)}
           totalCount={filteredGetaways.length}
@@ -280,7 +282,7 @@ export default function App() {
                 onClick={() => {
                   setSearchQuery('');
                   setMaxDriveMinutes(null);
-                  setActiveCategory('all');
+                  setActiveQuickFilter('all');
                 }}
                 className="mt-4 px-4 py-2 text-xs font-semibold bg-amber-600 text-white rounded-xl hover:bg-amber-500 transition-colors"
               >

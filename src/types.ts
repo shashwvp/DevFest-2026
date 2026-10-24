@@ -19,6 +19,12 @@ export interface BaseCity {
   primaryHighway: string;
 }
 
+export type QuickFilterId = 
+  | 'all' 
+  | 'coolest-outdoors' 
+  | 'air-conditioned-indoors' 
+  | 'foothill-getaways';
+
 export type CategoryId = 
   | 'all' 
   | 'cool-outdoor' 
@@ -91,6 +97,7 @@ export interface Getaway {
   bestDepartureTip: string;
   admissionInfo: string;
   shadeRating: 'Heavy Shaded Ponderosa Canopy' | 'Coastal Fog & Ocean Breeze' | 'Cool River Willow Cover' | 'Subterranean 100% Shade' | 'Open Twilight Sky';
+  quickFilters?: QuickFilterId[];
   events?: GetawayEvent[];
 }
 
