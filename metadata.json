@@ -1,0 +1,6 @@
+{
+  "name": "Valley Escape",
+  "description": "Weather-smart getaway and event discovery app for California's Central Valley, helping residents beat the heat with temperature-delta recommendations from Modesto, Turlock, Stockton, and Fresno.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
