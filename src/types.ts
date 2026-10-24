@@ -19,7 +19,14 @@ export interface BaseCity {
   primaryHighway: string;
 }
 
-export type CategoryId = 'all' | 'mountain' | 'coastal' | 'river-lake' | 'underground' | 'evening';
+export type CategoryId = 
+  | 'all' 
+  | 'cool-outdoor' 
+  | 'river-shaded' 
+  | 'indoor-ac' 
+  | 'foothills-wine' 
+  | 'coastal' 
+  | 'evening';
 
 export interface RouteDetail {
   driveTime: string;
@@ -63,6 +70,8 @@ export interface Getaway {
   conditionIcon: string;
   reliefType: 'alpine' | 'coastal' | 'water' | 'underground' | 'evening';
   waterTempF?: string;
+  isIndoorAc?: boolean;
+  indoorAcTempF?: number;
   baseCityRoutes: Record<BaseCityId, RouteDetail>;
   summary: string;
   description: string;

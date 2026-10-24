@@ -45,7 +45,7 @@ export const GetawayModal: React.FC<GetawayModalProps> = ({
 
   const activeBaseCity = baseCities[activeBaseCityId];
   const route = getaway.baseCityRoutes[activeBaseCityId] || getaway.baseCityRoutes.modesto;
-  const delta = formatDelta(destTempF, baseTempF, unit);
+  const delta = formatDelta(destTempF, baseTempF, unit, activeBaseCity.name);
 
   const cityKeys: BaseCityId[] = ['modesto', 'turlock', 'stockton', 'fresno'];
 

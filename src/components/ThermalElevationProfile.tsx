@@ -40,7 +40,7 @@ export const ThermalElevationProfile: React.FC<ThermalElevationProfileProps> = (
       isBase: true,
     },
     {
-      id: 'knights-ferry-river',
+      id: 'knights-ferry',
       label: 'Stanislaus River',
       sublabel: 'Knights Ferry',
       elevation: '330 ft',
@@ -48,9 +48,9 @@ export const ThermalElevationProfile: React.FC<ThermalElevationProfileProps> = (
       color: 'bg-teal-600',
     },
     {
-      id: 'murphys-wine-caves',
+      id: 'murphys-sonora',
       label: 'Gold Foothills',
-      sublabel: 'Murphys Caves',
+      sublabel: 'Murphys & Sonora',
       elevation: '2,170 ft',
       type: 'foothill',
       color: 'bg-emerald-600',

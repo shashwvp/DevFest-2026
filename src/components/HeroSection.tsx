@@ -29,7 +29,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onSelectMaxDrive,
 }) => {
   const heroRoute = heroGetaway.baseCityRoutes[baseCity.id] || heroGetaway.baseCityRoutes.modesto;
-  const delta = formatDelta(heroDestTempF, baseTempF, unit);
+  const delta = formatDelta(heroDestTempF, baseTempF, unit, baseCity.name);
 
   return (
     <div className="relative overflow-hidden bg-stone-900 text-white rounded-3xl mx-4 sm:mx-6 lg:mx-8 my-6 shadow-xl border border-stone-800">

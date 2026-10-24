@@ -25,7 +25,7 @@ export const GetawayCard: React.FC<GetawayCardProps> = ({
   onSelect,
 }) => {
   const route = getaway.baseCityRoutes[baseCity.id] || getaway.baseCityRoutes.modesto;
-  const delta = formatDelta(destTempF, baseTempF, unit);
+  const delta = formatDelta(destTempF, baseTempF, unit, baseCity.name);
 
   return (
     <div className="group bg-white rounded-2xl border border-stone-200/90 shadow-2xs hover:shadow-md transition-all duration-200 flex flex-col justify-between overflow-hidden">
@@ -73,8 +73,8 @@ export const GetawayCard: React.FC<GetawayCardProps> = ({
             <div className="text-2xl font-black font-mono tabular-nums leading-none drop-shadow-xs">
               {toDisplayTemp(destTempF, unit)}
             </div>
-            <div className="text-xs font-semibold text-emerald-300 font-mono tabular-nums mt-0.5 drop-shadow-xs">
-              {delta.text} vs {baseCity.name}
+            <div className="text-xs font-bold text-emerald-300 font-mono tabular-nums mt-1 drop-shadow-xs">
+              {delta.text}
             </div>
           </div>
 
@@ -90,6 +90,18 @@ export const GetawayCard: React.FC<GetawayCardProps> = ({
       {/* Card Body */}
       <div className="p-5 flex-1 flex flex-col justify-between">
         <div>
+          {/* Prominent Temperature Difference Badge (e.g. 24°F Cooler than Modesto) */}
+          <div className={`mb-3 px-3 py-2 rounded-xl flex items-center justify-between text-xs font-bold font-mono tabular-nums border ${
+            delta.isCooler
+              ? 'bg-emerald-50 text-emerald-800 border-emerald-200/90'
+              : 'bg-stone-50 text-stone-700 border-stone-200'
+          }`}>
+            <span className="text-emerald-700 font-extrabold">{delta.text}</span>
+            <span className="text-[11px] font-medium text-stone-500 font-sans">
+              {getaway.isIndoorAc ? 'Indoor A/C' : getaway.condition}
+            </span>
+          </div>
+
           {/* Metadata: Clean unboxed text with typographic separators (No pills!) */}
           <div className="flex items-center gap-1.5 text-xs text-stone-500 font-medium">
             <span>{getaway.county}</span>

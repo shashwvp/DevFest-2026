@@ -19,11 +19,11 @@ export const CategoryFilterBar: React.FC<CategoryFilterBarProps> = ({
 }) => {
   const categories: { id: CategoryId; label: string; icon: React.ReactNode }[] = [
     { id: 'all', label: 'All Escapes', icon: <Sparkles className="w-4 h-4" /> },
-    { id: 'mountain', label: 'Alpine & Pines', icon: <Mountain className="w-4 h-4" /> },
-    { id: 'coastal', label: 'Pacific Coast', icon: <Waves className="w-4 h-4" /> },
-    { id: 'river-lake', label: 'Rivers & Lakes', icon: <Droplet className="w-4 h-4" /> },
-    { id: 'underground', label: 'Underground & A/C', icon: <Warehouse className="w-4 h-4" /> },
-    { id: 'evening', label: 'Sunset & Twilight', icon: <Moon className="w-4 h-4" /> },
+    { id: 'cool-outdoor', label: 'Foothills - Cool Outdoor', icon: <Mountain className="w-4 h-4" /> },
+    { id: 'river-shaded', label: 'River / Shaded Outdoor', icon: <Droplet className="w-4 h-4" /> },
+    { id: 'indoor-ac', label: 'Air-Conditioned Indoor', icon: <Warehouse className="w-4 h-4" /> },
+    { id: 'foothills-wine', label: 'Foothills Social / Wine', icon: <Sparkles className="w-4 h-4" /> },
+    { id: 'coastal', label: 'Pacific Coast & Marine', icon: <Waves className="w-4 h-4" /> },
   ];
 
   return (

@@ -43,7 +43,7 @@ export const SavedDrawer: React.FC<SavedDrawerProps> = ({
       ...savedGetaways.map((g) => {
         const destTemp = destinationTemps[g.id] || g.defaultTempF;
         const route = g.baseCityRoutes[baseCity.id] || g.baseCityRoutes.modesto;
-        const delta = formatDelta(destTemp, baseTempF, unit);
+        const delta = formatDelta(destTemp, baseTempF, unit, baseCity.name);
         return `• ${g.title}: ${toDisplayTemp(destTemp, unit)} (${delta.text})\n  Drive: ${route.driveTime} (${route.distanceMiles} mi via ${route.routeHighway})\n  Tip: ${route.tip}`;
       }),
       `\n🎒 Recommended Packing List:`,
@@ -109,7 +109,7 @@ export const SavedDrawer: React.FC<SavedDrawerProps> = ({
               {savedGetaways.map((getaway) => {
                 const destTemp = destinationTemps[getaway.id] || getaway.defaultTempF;
                 const route = getaway.baseCityRoutes[baseCity.id] || getaway.baseCityRoutes.modesto;
-                const delta = formatDelta(destTemp, baseTempF, unit);
+                const delta = formatDelta(destTemp, baseTempF, unit, baseCity.name);
 
                 return (
                   <div

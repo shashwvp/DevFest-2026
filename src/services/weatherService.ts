@@ -33,27 +33,49 @@ export function toDisplayTemp(tempF: number, unit: TempUnit): string {
 export function formatDelta(
   destTempF: number,
   baseTempF: number,
-  unit: TempUnit
-): { text: string; rawDeltaF: number; isCooler: boolean } {
+  unit: TempUnit,
+  baseCityName: string = 'Modesto'
+): { text: string; rawDeltaF: number; isCooler: boolean; shortBadge: string } {
   const rawDeltaF = Math.round(destTempF - baseTempF);
   const isCooler = rawDeltaF < 0;
   const absF = Math.abs(rawDeltaF);
 
   if (unit === 'C') {
     const absC = Math.round((absF * 5) / 9);
-    if (absC === 0) return { text: 'Same temp', rawDeltaF, isCooler: false };
+    if (absC === 0) {
+      return {
+        text: `Same temp as ${baseCityName}`,
+        rawDeltaF,
+        isCooler: false,
+        shortBadge: '0°C',
+      };
+    }
     return {
-      text: isCooler ? `-${absC}°C cooler` : `+${absC}°C warmer`,
+      text: isCooler
+        ? `${absC}°C Cooler than ${baseCityName}`
+        : `${absC}°C Warmer than ${baseCityName}`,
       rawDeltaF,
       isCooler,
+      shortBadge: `${isCooler ? '-' : '+'}${absC}°C`,
     };
   }
 
-  if (absF === 0) return { text: 'Same temp', rawDeltaF, isCooler: false };
+  if (absF === 0) {
+    return {
+      text: `Same temp as ${baseCityName}`,
+      rawDeltaF,
+      isCooler: false,
+      shortBadge: '0°F',
+    };
+  }
+
   return {
-    text: isCooler ? `-${absF}°F cooler` : `+${absF}°F warmer`,
+    text: isCooler
+      ? `${absF}°F Cooler than ${baseCityName}`
+      : `${absF}°F Warmer than ${baseCityName}`,
     rawDeltaF,
     isCooler,
+    shortBadge: `${isCooler ? '-' : '+'}${absF}°F`,
   };
 }
 
@@ -121,6 +143,10 @@ export function getScenarioTemp(
   scenario: WeatherScenario,
   liveTempF?: number
 ): number {
+  if ('isIndoorAc' in baseOrDest && baseOrDest.isIndoorAc) {
+    return baseOrDest.indoorAcTempF || 68;
+  }
+
   if (scenario === 'live' && liveTempF !== undefined) {
     return liveTempF;
   }

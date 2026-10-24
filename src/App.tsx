@@ -31,8 +31,8 @@ export default function App() {
   // Temperature unit state (°F / °C)
   const [unit, setUnit] = useState<TempUnit>('F');
 
-  // Weather scenario ('summer', 'scorcher', 'mild', 'live')
-  const [scenario, setScenario] = useState<WeatherScenario>('summer');
+  // Weather scenario ('live', 'summer', 'scorcher', 'mild')
+  const [scenario, setScenario] = useState<WeatherScenario>('live');
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const [liveBaseWeather, setLiveBaseWeather] = useState<{
     tempF: number;
@@ -63,9 +63,9 @@ export default function App() {
   const [savedGetawayIds, setSavedGetawayIds] = useState<string[]>(() => {
     try {
       const saved = localStorage.getItem('valley_escape_saved');
-      return saved ? JSON.parse(saved) : ['pinecrest-lake', 'santa-cruz-coast'];
+      return saved ? JSON.parse(saved) : ['pinecrest-lake', 'knights-ferry'];
     } catch {
-      return ['pinecrest-lake', 'santa-cruz-coast'];
+      return ['pinecrest-lake', 'knights-ferry'];
     }
   });
 
@@ -90,11 +90,12 @@ export default function App() {
     }
   }, []);
 
-  // Fetch weather for active base city
+  // Fetch weather dynamically from Open-Meteo for base city & all escape destinations
   const refreshCityWeather = useCallback(async () => {
     setIsRefreshing(true);
     const city = BASE_CITIES[activeBaseCityId];
     try {
+      // 1. Fetch live Open-Meteo weather for the active departure base city
       const weather = await fetchLiveWeather(
         city.coordinates.lat,
         city.coordinates.lon,
@@ -104,19 +105,27 @@ export default function App() {
       );
       setLiveBaseWeather(weather);
 
-      // Also prefetch a few key getaways (e.g. Pinecrest & Santa Cruz)
-      const pinecrest = GETAWAYS[0];
-      const santaCruz = GETAWAYS[1];
-      const [pineW, scW] = await Promise.all([
-        fetchLiveWeather(pinecrest.coordinates.lat, pinecrest.coordinates.lon, pinecrest.defaultTempF, pinecrest.condition, pinecrest.conditionIcon),
-        fetchLiveWeather(santaCruz.coordinates.lat, santaCruz.coordinates.lon, santaCruz.defaultTempF, santaCruz.condition, santaCruz.conditionIcon),
-      ]);
+      // 2. Dynamically fetch live Open-Meteo temperatures for all escape destinations using lat/long
+      const destPromises = GETAWAYS.map(async (g) => {
+        const destWeather = await fetchLiveWeather(
+          g.coordinates.lat,
+          g.coordinates.lon,
+          g.defaultTempF,
+          g.condition,
+          g.conditionIcon
+        );
+        return {
+          id: g.id,
+          tempF: g.isIndoorAc ? (g.indoorAcTempF || 68) : destWeather.tempF,
+        };
+      });
 
-      setDestinationLiveTemps((prev) => ({
-        ...prev,
-        [pinecrest.id]: pineW.tempF,
-        [santaCruz.id]: scW.tempF,
-      }));
+      const destResults = await Promise.all(destPromises);
+      const tempsMap: Record<string, number> = {};
+      destResults.forEach((item) => {
+        tempsMap[item.id] = item.tempF;
+      });
+      setDestinationLiveTemps(tempsMap);
     } finally {
       setIsRefreshing(false);
     }
